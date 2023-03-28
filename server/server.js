@@ -3,16 +3,19 @@ const bodyParser = require('body-parser');
 const Book = require('./models/Books');
 
 const app = express();
-app.use(bodyParser.json());
+const cors = require("cors")
+app.use(cors());
+app.use(express.json());
 
 app.get('/books', async (req, res) => {
     const books = await Book.findAll();
-    res.send(books);
+    res.json(books);
 });
 
 app.get('/books/:id', async (req, res) => {
     const book = await Book.findByPk(req.params.id);
     res.send(book);
+
 });
 
 app.post('/books', async (req, res) => {
